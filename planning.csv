@@ -1,0 +1,99 @@
+date,tache_id,membre_id,membre_nom,tache_nom,tache_desc
+2026-02-28,1,GROUPE,LEHIBE II,SSM,Mitarika Sekoly Sabata
+2026-02-28,2,GROUPE,LEHIBE II,SST,Tatitra Maneran-tany
+2026-02-28,3,GROUPE,LEHIBE II,SS5,5 minitra Sekoly Sabata
+2026-02-28,4,36,A. Notahiana,SS10,10 minitra ASAFI
+2026-02-28,6,13,Rafidimanana,FTH,Fitsahoana Hira
+2026-02-28,5,37,R. Volasoa Florette,FTV,Fitsahoana Vakiteny
+2026-02-28,7,23,R. Fenosoa,CUM,Mitarika Foatoam-pivavahana
+2026-02-28,8,8,M. Tsoa,CUVK,Vakiteny
+2026-02-28,9,32,R. Jeannot,CUVP,Vavaka Pastoraly
+2026-02-28,10,31,R. Johnson,CUFN,Fanentanana Fanatitra
+2026-02-28,11,22,R. Florette,CUTA,Toriteny Ankizy
+2026-02-28,12,16,R. Fihobiana,CUTL,Toriteny Lehibe
+2026-02-28,13,30,E. Falisoa,HARM,Mitarika Hariva
+2026-02-28,14,7,A. Rado,HARF,Vatsim-panahy
+2026-03-14,1,GROUPE,ZATOVO,SSM,Mitarika Sekoly Sabata
+2026-03-14,2,GROUPE,ZATOVO,SST,Tatitra Maneran-tany
+2026-03-14,3,GROUPE,ZATOVO,SS5,5 minitra Sekoly Sabata
+2026-03-14,4,14,R. Fitia,SS10,10 minitra ASAFI
+2026-03-14,6,33,R. Ernestine,FTH,Fitsahoana Hira
+2026-03-14,5,9,R. Andoniaina,FTV,Fitsahoana Vakiteny
+2026-03-14,7,46,Ramaroson Liva,CUM,Mitarika Foatoam-pivavahana
+2026-03-14,8,48,R. Misedra,CUVK,Vakiteny
+2026-03-14,9,19,R. Andre,CUVP,Vavaka Pastoraly
+2026-03-14,10,20,A. Michael,CUFN,Fanentanana Fanatitra
+2026-03-14,11,10,R. Yolande,CUTA,Toriteny Ankizy
+2026-03-14,12,55,xxyy,CUTL,Toriteny Lehibe
+2026-03-14,13,49,Minosoa,HARM,Mitarika Hariva
+2026-03-14,14,25,T. Harisoa,HARF,Vatsim-panahy
+2026-03-07,1,GROUPE,TANORA ZOKINY,SSM,Mitarika Sekoly Sabata
+2026-03-07,2,GROUPE,TANORA ZOKINY,SST,Tatitra Maneran-tany
+2026-03-07,3,GROUPE,TANORA ZOKINY,SS5,5 minitra Sekoly Sabata
+2026-03-07,4,24,R. Arthur,SS10,10 minitra ASAFI
+2026-03-07,6,28,R. Jeannine,FTH,Fitsahoana Hira
+2026-03-07,5,6,R. Herinirina,FTV,Fitsahoana Vakiteny
+2026-03-07,7,29,R. Estelle,CUM,Mitarika Foatoam-pivavahana
+2026-03-07,8,26,Razafinirinarisoa,CUVK,Vakiteny
+2026-03-07,9,15,R. Armand,CUVP,Vavaka Pastoraly
+2026-03-07,10,35,T. Fitiavana,CUFN,Fanentanana Fanatitra
+2026-03-07,11,47,R. Vololona,CUTA,Toriteny Ankizy
+2026-03-07,12,43,Mitia,CUTL,Toriteny Lehibe
+2026-03-07,13,17,Aldo,HARM,Mitarika Hariva
+2026-03-07,14,38,Pulchérie,HARF,Vatsim-panahy
+2026-03-14,1,GROUPE,ZATOVO,SSM,Mitarika Sekoly Sabata
+2026-03-14,2,GROUPE,ZATOVO,SST,Tatitra Maneran-tany
+2026-03-14,3,GROUPE,ZATOVO,SS5,5 minitra Sekoly Sabata
+2026-03-14,4,36,A. Notahiana,SS10,10 minitra ASAFI
+2026-03-14,6,11,R. Fabrice,FTH,Fitsahoana Hira
+2026-03-14,5,50,Kevin,FTV,Fitsahoana Vakiteny
+2026-03-14,7,39,Todisoa,CUM,Mitarika Foatoam-pivavahana
+2026-03-14,8,12,Adonih,CUVK,Vakiteny
+2026-03-14,9,21,R. Patern,CUVP,Vavaka Pastoraly
+2026-03-14,10,18,R. Tsilavina,CUFN,Fanentanana Fanatitra
+2026-03-14,11,42,Mario,CUTA,Toriteny Ankizy
+2026-03-14,12,52,Marcel,CUTL,Toriteny Lehibe
+2026-03-14,13,16,R. Fihobiana,HARM,Mitarika Hariva
+2026-03-14,14,7,A. Rado,HARF,Vatsim-panahy
+2026-03-21,1,GROUPE,LEHIBE I,SSM,Mitarika Sekoly Sabata
+2026-03-21,2,GROUPE,LEHIBE I,SST,Tatitra Maneran-tany
+2026-03-21,3,GROUPE,LEHIBE I,SS5,5 minitra Sekoly Sabata
+2026-03-21,4,37,R. Volasoa Florette,SS10,10 minitra ASAFI
+2026-03-21,6,44,Xénophan,FTH,Fitsahoana Hira
+2026-03-21,5,5,R. Raivo,FTV,Fitsahoana Vakiteny
+2026-03-21,7,53,Koloina,CUM,Mitarika Foatoam-pivavahana
+2026-03-21,8,51,Princy,CUVK,Vakiteny
+2026-03-21,9,30,E. Falisoa,CUVP,Vavaka Pastoraly
+2026-03-21,10,8,M. Tsoa,CUFN,Fanentanana Fanatitra
+2026-03-21,11,22,R. Florette,CUTA,Toriteny Ankizy
+2026-03-21,12,23,R. Fenosoa,CUTL,Toriteny Lehibe
+2026-03-21,13,13,Rafidimanana,HARM,Mitarika Hariva
+2026-03-21,14,6,R. Herinirina,HARF,Vatsim-panahy
+2026-03-28,1,GROUPE,LEHIBE II,SSM,Mitarika Sekoly Sabata
+2026-03-28,2,GROUPE,LEHIBE II,SST,Tatitra Maneran-tany
+2026-03-28,3,GROUPE,LEHIBE II,SS5,5 minitra Sekoly Sabata
+2026-03-28,4,24,R. Arthur,SS10,10 minitra ASAFI
+2026-03-28,6,27,R. Romuald,FTH,Fitsahoana Hira
+2026-03-28,5,34,R. Saholimalala,FTV,Fitsahoana Vakiteny
+2026-03-28,7,29,R. Estelle,CUM,Mitarika Foatoam-pivavahana
+2026-03-28,8,43,Mitia,CUVK,Vakiteny
+2026-03-28,9,15,R. Armand,CUVP,Vavaka Pastoraly
+2026-03-28,10,17,Aldo,CUFN,Fanentanana Fanatitra
+2026-03-28,11,35,T. Fitiavana,CUTA,Toriteny Ankizy
+2026-03-28,12,19,R. Andre,CUTL,Toriteny Lehibe
+2026-03-28,13,47,R. Vololona,HARM,Mitarika Hariva
+2026-03-28,14,26,Razafinirinarisoa,HARF,Vatsim-panahy
+2026-04-04,1,GROUPE,TANORA ZOKINY,SSM,Mitarika Sekoly Sabata
+2026-04-04,2,GROUPE,TANORA ZOKINY,SST,Tatitra Maneran-tany
+2026-04-04,3,GROUPE,TANORA ZOKINY,SS5,5 minitra Sekoly Sabata
+2026-04-04,4,14,R. Fitia,SS10,10 minitra ASAFI
+2026-04-04,6,28,R. Jeannine,FTH,Fitsahoana Hira
+2026-04-04,5,38,Pulchérie,FTV,Fitsahoana Vakiteny
+2026-04-04,7,48,R. Misedra,CUM,Mitarika Foatoam-pivavahana
+2026-04-04,8,11,R. Fabrice,CUVK,Vakiteny
+2026-04-04,9,21,R. Patern,CUVP,Vavaka Pastoraly
+2026-04-04,10,20,A. Michael,CUFN,Fanentanana Fanatitra
+2026-04-04,11,10,R. Yolande,CUTA,Toriteny Ankizy
+2026-04-04,12,24,R. Arthur,CUTL,Toriteny Lehibe
+2026-04-04,13,9,R. Andoniaina,HARM,Mitarika Hariva
+2026-04-04,14,25,T. Harisoa,HARF,Vatsim-panahy
