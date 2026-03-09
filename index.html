@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="mg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fandaharam-potoana - Fiangonana</title>
+    <style>
+        :root { --primary: #2c3e50; --bg: #f8f9fa; --text: #333; --card: #ffffff; }
+        @media (prefers-color-scheme: dark) {
+            :root { --bg: #1a1a1a; --text: #f0f0f0; --card: #2d2d2d; }
+        }
+        body { font-family: -apple-system, sans-serif; background: var(--bg); color: var(--text); padding: 20px; line-height: 1.6; }
+        .container { max-width: 600px; margin: 0 auto; }
+        h2 { text-align: center; color: #e74c3c; margin-bottom: 30px; }
+        .date-header { background: var(--primary); color: white; padding: 10px; border-radius: 8px; margin-top: 25px; text-align: center; font-weight: bold; font-size: 1.2rem; }
+        .task-card { background: var(--card); padding: 15px; margin: 10px 0; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
+        .task-name { font-weight: bold; color: var(--text); flex: 1; }
+        .member-name { color: #3498db; font-weight: bold; font-size: 1.1rem; flex: 1; text-align: right; }
+        .loading { text-align: center; margin-top: 50px; font-style: italic; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Fandaharam-potoana</h2>
+        <div id="content" class="loading">Maka ny vaovao farany...</div>
+    </div>
+
+    <script>
+        async function loadSchedule() {
+            try {
+                const response = await fetch('schedule.csv');
+                const data = await response.text();
+                const rows = data.split('\n').map(row => row.split(',').map(cell => cell.replace(/"/g, '')));
+                
+                const headers = rows[0]; // The 3 dates
+                const contentDiv = document.getElementById('content');
+                contentDiv.innerHTML = '';
+
+                // Create sections for each date
+                for (let col = 1; col <= 3; col++) {
+                    if (!headers[col] || headers[col].trim() === "") continue;
+
+                    const dateDiv = document.createElement('div');
+                    dateDiv.className = 'date-header';
+                    dateDiv.innerText = headers[col];
+                    contentDiv.appendChild(dateDiv);
+
+                    // Add tasks for this date
+                    for (let r = 1; r < rows.length; r++) {
+                        const taskDesc = rows[r][0];
+                        const member = rows[r][col];
+                        if (taskDesc && member && member.trim() !== "") {
+                            const card = document.createElement('div');
+                            card.className = 'task-card';
+                            card.innerHTML = `<span class="task-name">${taskDesc}</span><span class="member-name">${member}</span>`;
+                            contentDiv.appendChild(card);
+                        }
+                    }
+                }
+            } catch (err) {
+                document.getElementById('content').innerHTML = "Tsy hita ny fandaharana. Hamarino indray avy eo.";
+            }
+        }
+        loadSchedule();
+    </script>
+</body>
+</html>
