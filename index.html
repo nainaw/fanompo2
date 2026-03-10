@@ -31,7 +31,6 @@
             color: var(--primary);
             margin-bottom: 10px;
         }
-        /* PDF Button Style */
         .pdf-section {
             text-align: center;
             margin-bottom: 30px;
@@ -51,7 +50,6 @@
             background-color: var(--secondary);
             transform: translateY(-2px);
         }
-        /* Card Styles */
         .card {
             background: white;
             border-radius: 12px;
@@ -109,26 +107,68 @@
     </div>
 
     <script>
-        const csvUrl = 'data.csv';
+        // Adding a timestamp to the URL prevents the browser from loading an old cached version
+        const csvUrl = 'data.csv?v=' + new Date().getTime();
 
         async function loadPlanning() {
+            const contentDiv = document.getElementById('content');
             try {
                 const response = await fetch(csvUrl);
                 if (!response.ok) throw new Error("Tsy hita ny data.csv");
                 
                 const csvData = await response.text();
-                // Split lines and handle potential empty lines
-                const rows = csvData.trim().split('\n').map(row => row.split(','));
+                
+                // Split lines and remove any completely empty lines
+                const rows = csvData.split(/\r?\n/).filter(row => row.trim() !== "");
                 
                 if (rows.length < 2) {
-                    document.getElementById('content').innerHTML = "Tsy misy fandaharana mivoaka aloha izao.";
+                    contentDiv.innerHTML = "Tsy misy fandaharana mivoaka aloha izao.";
                     return;
                 }
 
-                const contentDiv = document.getElementById('content');
-                contentDiv.innerHTML = ''; // Clear loading text
+                contentDiv.innerHTML = ''; // Success! Clear the loading message.
 
-                // Header row (Dates)
-                const headers = rows[0].map(h => h.trim());
+                // Helper to handle potential quotes in CSV
+                const parseCSVRow = (row) => {
+                    return row.split(',').map(cell => cell.replace(/^"(.*)"$/, '$1').trim());
+                };
+
+                const headers = parseCSVRow(rows[0]); // The Dates in Row 1
                 
-                // Data
+                for (let i = 1; i < rows.length; i++) {
+                    const row = parseCSVRow(rows[i]);
+                    if (!row[0]) continue; // Skip if the task name is missing
+
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    
+                    let cardHTML = `<h3>${row[0]}</h3>`;
+                    
+                    // Display the 3 date columns (Index 1, 2, and 3)
+                    for (let j = 1; j <= 3; j++) {
+                        const dateLabel = headers[j] || "Daty";
+                        const memberName = row[j] || "---";
+                        
+                        if (memberName !== "---" || dateLabel !== "Daty") {
+                            cardHTML += `
+                                <div class="date-row">
+                                    <span class="date-label">${dateLabel}</span>
+                                    <span class="member-name">${memberName}</span>
+                                </div>`;
+                        }
+                    }
+                    
+                    card.innerHTML = cardHTML;
+                    contentDiv.appendChild(card);
+                }
+            } catch (error) {
+                console.error(error);
+                contentDiv.innerHTML = "<div style='text-align:center; color:red;'>Misy olana kely ny fampisehoana ny angona. Afaka jerena ny PDF eo ambony.</div>";
+            }
+        }
+
+        loadPlanning();
+    </script>
+
+</body>
+</html>
