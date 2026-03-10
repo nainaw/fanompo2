@@ -27,40 +27,44 @@
 
     <script>
         async function loadSchedule() {
-            try {
-                const response = await fetch('schedule.csv');
-                const data = await response.text();
-                const rows = data.split('\n').map(row => row.split(',').map(cell => cell.replace(/"/g, '')));
-                
-                const headers = rows[0]; // The 3 dates
-                const contentDiv = document.getElementById('content');
-                contentDiv.innerHTML = '';
+    try {
+        const response = await fetch('schedule.csv?t=' + new Date().getTime()); // Prevents old data from sticking
+        const data = await response.text();
+        
+        // This regex better handles CSV cells with quotes and commas
+        const rows = data.split(/\r?\n/).filter(row => row.trim() !== "").map(row => {
+            return row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g).map(cell => cell.replace(/"/g, ''));
+        });
 
-                // Create sections for each date
-                for (let col = 1; col <= 3; col++) {
-                    if (!headers[col] || headers[col].trim() === "") continue;
+        const headers = rows[0]; 
+        const contentDiv = document.getElementById('content');
+        contentDiv.innerHTML = '';
 
-                    const dateDiv = document.createElement('div');
-                    dateDiv.className = 'date-header';
-                    dateDiv.innerText = headers[col];
-                    contentDiv.appendChild(dateDiv);
+        for (let col = 1; col <= 3; col++) {
+            // Check if header exists and isn't just a placeholder
+            if (!headers[col] || headers[col].trim() === "" || headers[col].includes("00/00")) continue;
 
-                    // Add tasks for this date
-                    for (let r = 1; r < rows.length; r++) {
-                        const taskDesc = rows[r][0];
-                        const member = rows[r][col];
-                        if (taskDesc && member && member.trim() !== "") {
-                            const card = document.createElement('div');
-                            card.className = 'task-card';
-                            card.innerHTML = `<span class="task-name">${taskDesc}</span><span class="member-name">${member}</span>`;
-                            contentDiv.appendChild(card);
-                        }
-                    }
+            const dateDiv = document.createElement('div');
+            dateDiv.className = 'date-header';
+            dateDiv.innerText = headers[col];
+            contentDiv.appendChild(dateDiv);
+
+            for (let r = 1; r < rows.length; r++) {
+                const taskDesc = rows[r][0];
+                const member = rows[r][col];
+                if (taskDesc && member && member.trim() !== "") {
+                    const card = document.createElement('div');
+                    card.className = 'task-card';
+                    card.innerHTML = `<span class="task-name">${taskDesc}</span><span class="member-name">${member}</span>`;
+                    contentDiv.appendChild(card);
                 }
-            } catch (err) {
-                document.getElementById('content').innerHTML = "Tsy hita ny fandaharana. Hamarino indray avy eo.";
             }
         }
+    } catch (err) {
+        console.error(err);
+        document.getElementById('content').innerHTML = "Tsy hita ny fandaharana.";
+    }
+}
         loadSchedule();
     </script>
 </body>
