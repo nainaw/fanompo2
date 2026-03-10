@@ -3,75 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fanompoana isan-tsabata</title>
+    <title>Fandaharana Masina</title>
     <style>
-        :root { --primary: #2c3e50; --bg: #f8f9fa; --text: #333; --card: #ffffff; }
-        @media (prefers-color-scheme: dark) {
-            :root { --bg: #1a1a1a; --text: #f0f0f0; --card: #2d2d2d; }
+        :root {
+            --primary: #2c3e50;
+            --secondary: #34495e;
+            --accent: #e74c3c;
+            --bg: #f4f7f6;
+            --text: #333;
         }
-        body { font-family: -apple-system, sans-serif; background: var(--bg); color: var(--text); padding: 20px; line-height: 1.6; }
-        .container { max-width: 600px; margin: 0 auto; }
-        h2 { text-align: center; color: #e74c3c; margin-bottom: 30px; }
-        .date-header { background: var(--primary); color: white; padding: 10px; border-radius: 8px; margin-top: 25px; text-align: center; font-weight: bold; font-size: 1.2rem; }
-        .task-card { background: var(--card); padding: 15px; margin: 10px 0; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
-        .task-name { font-weight: bold; color: var(--text); flex: 1; }
-        .member-name { color: #3498db; font-weight: bold; font-size: 1.1rem; flex: 1; text-align: right; }
-        .loading { text-align: center; margin-top: 50px; font-style: italic; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        /* PDF Button Style */
+        .pdf-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .download-btn {
+            background-color: var(--primary);
+            color: white;
+            padding: 14px 28px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            display: inline-block;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s, background 0.3s;
+        }
+        .download-btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        /* Card Styles */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--primary);
+        }
+        .card h3 {
+            margin: 0 0 15px 0;
+            color: var(--accent);
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        .date-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
+        }
+        .date-row:last-child {
+            border-bottom: none;
+        }
+        .date-label {
+            font-weight: bold;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .member-name {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        #loading {
+            text-align: center;
+            font-style: italic;
+            color: #888;
+        }
     </style>
 </head>
 <body>
+
     <div class="container">
-        <h2>ANJARA FANOMPOANA ISAN-TSABATA</h2>
-         <!--<div id="content" class="loading">Maka ny vaovao farany...</div>-->
-        <div style="text-align: center; margin-bottom: 30px;">
-    <a href="fandaharana.pdf" target="_blank" 
-       style="background-color: #2c3e50; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block; font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-       📥 Haka ny PDF (Tableau)
-    </a>
-</div>
+        <h1>Fandaharana</h1>
+        
+        <div class="pdf-section">
+            <a href="fandaharana.pdf" target="_blank" class="download-btn">
+                📥 Haka ny PDF (Tableau)
+            </a>
+        </div>
+
+        <div id="content">
+            <div id="loading">Eo am-pamoahana ny fandaharana...</div>
+        </div>
     </div>
 
     <script>
-        async function loadSchedule() {
-    try {
-        const response = await fetch('schedule.csv?t=' + new Date().getTime()); // Prevents old data from sticking
-        const data = await response.text();
-        
-        // This regex better handles CSV cells with quotes and commas
-        const rows = data.split(/\r?\n/).filter(row => row.trim() !== "").map(row => {
-            return row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g).map(cell => cell.replace(/"/g, ''));
-        });
+        const csvUrl = 'data.csv';
 
-        const headers = rows[0]; 
-        const contentDiv = document.getElementById('content');
-        contentDiv.innerHTML = '';
-
-        for (let col = 1; col <= 3; col++) {
-            // Check if header exists and isn't just a placeholder
-            if (!headers[col] || headers[col].trim() === "" || headers[col].includes("00/00")) continue;
-
-            const dateDiv = document.createElement('div');
-            dateDiv.className = 'date-header';
-            dateDiv.innerText = headers[col];
-            contentDiv.appendChild(dateDiv);
-
-            for (let r = 1; r < rows.length; r++) {
-                const taskDesc = rows[r][0];
-                const member = rows[r][col];
-                if (taskDesc && member && member.trim() !== "") {
-                    const card = document.createElement('div');
-                    card.className = 'task-card';
-                    card.innerHTML = `<span class="task-name">${taskDesc}</span><span class="member-name">${member}</span>`;
-                    contentDiv.appendChild(card);
+        async function loadPlanning() {
+            try {
+                const response = await fetch(csvUrl);
+                if (!response.ok) throw new Error("Tsy hita ny data.csv");
+                
+                const csvData = await response.text();
+                // Split lines and handle potential empty lines
+                const rows = csvData.trim().split('\n').map(row => row.split(','));
+                
+                if (rows.length < 2) {
+                    document.getElementById('content').innerHTML = "Tsy misy fandaharana mivoaka aloha izao.";
+                    return;
                 }
-            }
-        }
-    } catch (err) {
-        console.error(err);
-        document.getElementById('content').innerHTML = "Tsy hita ny fandaharana.";
-    }
-}
-        loadSchedule();
-    </script>
-</body>
-</html>
+
+                const contentDiv = document.getElementById('content');
+                contentDiv.innerHTML = ''; // Clear loading text
+
+                // Header row (Dates)
+                const headers = rows[0].map(h => h.trim());
+                
+                // Data
