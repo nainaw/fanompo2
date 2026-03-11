@@ -2,100 +2,107 @@
 <html lang="mg">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fandaharana Masina</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Fandaharana</title>
     <style>
         :root {
             --primary: #2c3e50;
-            --accent: #e74c3c;
-            --bg: #f4f7f6;
-            --card-bg: #ffffff;
+            --accent: #2980b9;
+            --bg: #f8f9fa;
+            --card-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
+        * { box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: var(--bg);
             margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
+            padding: 15px;
+            color: #333;
+            line-height: 1.5;
         }
         .container {
-            max-width: 600px;
-            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
         }
         h1 {
             text-align: center;
             color: var(--primary);
-            font-size: 2.2rem;
-            margin-bottom: 20px;
+            font-size: 1.5rem;
+            margin: 10px 0 20px 0;
         }
         .pdf-section {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
         .download-btn {
             background-color: var(--primary);
             color: white;
             padding: 12px 24px;
             text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            font-weight: 600;
+            display: inline-block;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
-        .card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 25px;
+        /* Mobile-First Date Cards */
+        .date-card {
+            background: white;
+            border-radius: 12px;
             margin-bottom: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-left: 6px solid var(--primary);
+            box-shadow: var(--card-shadow);
+            border: 1px solid #eee;
         }
-        .card h3 {
-            margin: 0 0 15px 0;
-            color: var(--accent);
-            font-size: 1.3rem;
-            border-bottom: 2px solid #f0f0f0;
-            padding-bottom: 10px;
+        .date-header {
+            background: #f1f3f5;
+            color: var(--primary);
+            padding: 12px;
+            text-align: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            border-bottom: 2px solid #dee2e6;
+            border-radius: 12px 12px 0 0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
-        .date-row {
+        .task-list {
+            padding: 5px 15px;
+        }
+        .assignment-row {
             display: flex;
-            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f1f1;
             align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #f9f9f9;
         }
-        .date-row:last-child {
+        .assignment-row:last-child {
             border-bottom: none;
         }
-        .date-text {
-            color: #555;
+        .task-name {
+            flex: 1;
+            font-size: 0.85rem;
+            color: #666;
             font-weight: 500;
+            padding-right: 10px;
         }
-        .name-text {
+        .member-name {
+            flex: 1.5;
             color: var(--primary);
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-align: right;
+            word-wrap: break-word;
         }
-        #loading {
-            text-align: center;
-            padding: 40px;
-            color: #888;
-            font-style: italic;
-        }
+        #loading { text-align: center; padding: 40px; color: #999; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Fandaharana</h1>
+        <h1>Fandaharana Masina</h1>
         
         <div class="pdf-section">
             <a href="fandaharana.pdf" target="_blank" class="download-btn">
-                📥 Haka ny PDF (Tableau)
+                📥 Haka ny PDF (Pirinty)
             </a>
         </div>
 
@@ -105,59 +112,55 @@
     </div>
 
     <script>
-        // Updated to your new filename
         const csvUrl = 'schedule.csv?v=' + Date.now();
 
-        async function loadData() {
+        async function renderMobilePlanning() {
             const content = document.getElementById('content');
             try {
                 const res = await fetch(csvUrl);
-                if (!res.ok) throw new Error("Tsy hita ny schedule.csv");
-                
                 const text = await res.text();
-                // Improved CSV parsing to handle different line endings and spaces
-                const rows = text.split(/\r?\n/)
-                                .filter(r => r.trim() !== "")
-                                .map(r => r.split(',').map(cell => cell.trim()));
+                // Handle various line endings and clean up commas/spaces
+                const rows = text.split(/\r?\n/).filter(r => r.trim() !== "").map(r => r.split(',').map(c => c.trim()));
 
-                if (rows.length < 2) {
-                    content.innerHTML = "Tsy misy angona azo aseho.";
-                    return;
-                }
+                if (rows.length < 2) return;
+
+                const headers = rows[0]; 
+                const tasks = rows.slice(1);
 
                 content.innerHTML = '';
-                const headers = rows[0]; // Dates
 
-                for (let i = 1; i < rows.length; i++) {
-                    const row = rows[i];
-                    if (!row[0] || row[0] === "") continue;
+                // Create 1 Card per Date Column
+                for (let col = 1; col < headers.length; col++) {
+                    if (!headers[col]) continue;
 
                     const card = document.createElement('div');
-                    card.className = 'card';
+                    card.className = 'date-card';
                     
-                    let html = `<h3>${row[0]}</h3>`;
-                    
-                    // Look at your 3 Saturday columns
-                    for (let j = 1; j < headers.length; j++) {
-                        if (headers[j] && headers[j] !== "") {
+                    let html = `<div class="date-header">${headers[col]}</div>`;
+                    html += `<div class="task-list">`;
+
+                    tasks.forEach(row => {
+                        const taskName = row[0];
+                        const member = row[col] || "---";
+                        
+                        if (taskName) {
                             html += `
-                                <div class="date-row">
-                                    <span class="date-text">${headers[j]}</span>
-                                    <span class="name-text">${row[j] || '---'}</span>
+                                <div class="assignment-row">
+                                    <span class="task-name">${taskName}</span>
+                                    <span class="member-name">${member}</span>
                                 </div>`;
                         }
-                    }
+                    });
+
+                    html += `</div>`;
                     card.innerHTML = html;
                     content.appendChild(card);
                 }
             } catch (err) {
-                content.innerHTML = `<div style="text-align:center; color:red; padding:20px;">
-                    Hadisoana: Tsy afaka mampiseho ny fandaharana.<br>
-                    Jereo ny PDF eo ambony.
-                </div>`;
+                content.innerHTML = "<p style='text-align:center;'>Misy olana kely ny tranonkala...</p>";
             }
         }
-        loadData();
+        renderMobilePlanning();
     </script>
 </body>
 </html>
