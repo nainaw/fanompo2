@@ -61,8 +61,15 @@
             padding: 15px;
             text-align: center;
             font-weight: 800;
-            font-size: 1.25rem; /* Larger Font */
+            font-size: 1.25rem;
             border-bottom: 2px solid #d1dce5;
+            
+            /* --- ADD THESE TWO LINES --- */
+            position: -webkit-sticky; /* For Safari/iPhone Support */
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            /* --------------------------- */
         }
         .task-list {
             padding: 10px 20px;
